@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<head>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+  <h1>A Simple Message Bank!</h1>
+
+</form>
+<a href="/submit">Submit a message</a>
+<br>
+<a href="/view">View messages</a>
+<br><br>
+
+{% block content %}
+{% endblock %}
+
+</body>
+</html>
