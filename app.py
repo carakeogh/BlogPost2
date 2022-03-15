@@ -57,16 +57,17 @@ def render_template(request):
         try:
             #inserts the user's information into the messages table
             insert_message(request)
-            thanks = "Thank you for your submission!"
+            #thanks = "Thank you for your submission!"
             #thanks user for submission and renders the submit template with message and handle information
-            return thanks, render_template('submit.html', message=request.form['message'], handle=request.form['handle'])
+            return render_template('submit.html', message=request.form['message'], handle=request.form['handle'])
         except: 
             return render_template('submit.html')
 
         
 def random_messages(n):
     c = get_message_db.cursor()
-    c.execute('SELECT * FROM messages ORDER BY RANDOM() LIMIT n')
+    num = str(n)
+    c.execute('SELECT * FROM messages ORDER BY RANDOM() LIMIT(?)', num)
     submissions = c.fetchall()
     c.close()
     return submissions
