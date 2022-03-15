@@ -63,8 +63,7 @@ def render_template(request):
         except: 
             return render_template('submit.html')
 
-
-@app.route('/view/')
+        
 def random_messages(n):
     c = get_message_db.cursor()
     c.execute('SELECT * FROM messages ORDER BY RANDOM() LIMIT n')
@@ -72,9 +71,9 @@ def random_messages(n):
     c.close()
     return submissions
 
-@app.route('/view/', methods=['POST', 'GET'])
+
+@app.route('/view')
 def render_template2():
-    if request.method == 'GET':
-        r = random_messages(5)
-        return render_template('view.html', r)
+    r = random_messages(5)
+    return render_template('view.html', submissions = r)
 
