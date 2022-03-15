@@ -5,8 +5,12 @@
 {% endblock %}
 
 {% block content %}
+<body>
   {% for s in submissions %}
+    {{s[2]}}
+    <br>
+    {{s[1]}}
     <br><br>
-    {{s[0]}}<br>{{s[1]}}
   {% endfor %}
+</body>
 {% endblock %}
