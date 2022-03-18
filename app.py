@@ -7,29 +7,18 @@ app = Flask(__name__)
 @app.route("/")
 def main():
     return render_template("base.html")
-#checked
 
 def get_message_db():
     #open connection to database message_db in g attribute
     if 'message_db' not in g:
         g.message_db = sqlite3.connect("messages.sqlite")
 
-    #c = g.message_db.cursor()
-
+    #create an empty table for the messages
     cmd = \
         'CREATE TABLE IF NOT EXISTS messages (id INT, handle TINYTEXT, message TINYTEXT)'
     g.message_db.execute(cmd)
 
-
-    #create a table messages to store the user's name/handle, message, and an ID number that we will assign
-    #c.execute("DROP TABLE IF EXISTS messages")
-    #c.execute('CREATE TABLE messages (id INT, handle TINYTEXT, message TINYTEXT)') 
-    
-    #close the connection
-    #c.close()
-
     return g.message_db
-    #checked, not sure if we are supposed to close connection
 
 
 def insert_message(request):
@@ -63,7 +52,6 @@ def insert_message(request):
         datab.close()
 
     return render_template('base.html')
-    #not sure about return statement
 
 
 @app.route('/submit/', methods=['POST', 'GET'])
@@ -76,13 +64,14 @@ def submit_template():
         handle = request.form["handle"]
         insert_message(request)
         return render_template('submit.html')
-        #checked, changed render_template(request) to render_template()
+
 
         
 def random_messages(n):
     datab = get_message_db()
     c = datab.cursor()
 
+    #get n random messages from the database
     cmd = 'SELECT * FROM messages ORDER BY RANDOM() LIMIT ?'
     submissions = c.execute(cmd, (n,))
     submissions = c.fetchall()
@@ -92,12 +81,11 @@ def random_messages(n):
         datab.close()
 
     return submissions
-    #mostly checked
 
 
 @app.route('/view/')
 def view():
+    #return five random messages
     r = random_messages(5)
     return render_template('view.html', datab = r)
-    #cheked
 
