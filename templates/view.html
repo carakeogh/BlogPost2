@@ -4,13 +4,14 @@
   <h1>{% block title %}Some Cool Messages{% endblock %}</h1>
 {% endblock %}
 
-{% block content %}
 <body>
-  {% for s in submissions %}
+{% block content %}
+  {% for s in datab %}
     {{s[2]}}
     <br>
-    {{s[1]}}
+    - {{s[1]}}
     <br><br>
   {% endfor %}
-</body>
 {% endblock %}
+</body>
+</html>
